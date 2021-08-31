@@ -1,0 +1,14 @@
+#order-table{
+    text-align: center;
+}
+#order-table .btn {
+    color: blue;
+    background: white;
+    border-color: lightblue;
+}
+
+#order-table .btn:hover {
+    color: blue;
+    background: lightblue;
+    border-color: white;
+}

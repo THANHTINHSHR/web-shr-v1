@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Log Problem</title>
+    <!-- Favicon -->
+    <link th:href="@{/img/favicon.ico}" rel="icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap"
+          rel="stylesheet">
+
+    <!-- CSS Libraries -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link th:href="@{/lib/slick/slick.css}" rel="stylesheet">
+    <link th:href="@{/lib/slick/slick-theme.css}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link th:href="@{/css/root-style.css}" rel="stylesheet">
+    <link th:href="@{/css/table-scroll.css}" rel="stylesheet">
+
+</head>
+<header th:include="/normal/header.html"></header>
+
+
+<body>
+
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-wrap">
+    <div class="container-fluid">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active"><a href="/log-problem">Log Problem</a></li>
+        </ul>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Contact Start -->
+<div class="contact">
+    <div class="container-fluid">
+        <h3>
+            Log problem PROJECT WEB SPRING BOOT
+        </h3>
+        <div class="row">
+           <pre>
+               + REMEMBER_ME
++ REDIRECT TO CSS AND JS FILE
++LẤY ROLES CỦA USER
++ ĐÔI KHI TẮT MÁY BẬT LÊN THÌ WEB CHẠY SAI, KHÔNG LOAD JS,CSS -> ồ ra là do mình không kết nối mạng
++ double value when click button plus in quantity
++ lưu caeer và change product detail
++  http.csrf().disable().cors(); bị lỗi 403 trong ajax
++ khi sử dụng $(#id).remove() của jquery, mình lấy 1 thẻ div bọc ngoài  ngay sau tbody ( trước tr) thì khi chạy thẻ div nó lại nằm ở vị trí khác ( nó chạy tuốt lên trên, mình có file tải về khi đó. nó nằm ở vị trí tào lao) vậy nên mình chuyển các tham số để reove vào thẻ tr. thế lại ok
++ trường hợp inteliji không hiểu gọi attriibute:
+th:object="${order}"
+ th:field = "*{recipient}".  mình cố gắn thử nhưng không được nên chuyển sang dùng th:filed="${order.recipient}". nó hoạt động nhưng lại không thể sauwr dụng chung với th:value="${user.name}" như là một default value. . Attribute th:field sẽ thay thế th:id, th:value và th:name
++ băng khoăn về việc hiển thị order nhưng thế nào, vì nếu phía khách hàng thì  muốn nhìn thấy họ mua gì, nhưng nếu code như vậy thì rất phiền phức. có lẽ nên chỉnh mỗi mặt hàng là một đơn hàng
++ việc trả về bằng list và truyền cào pageable khác với trả về page truyền vào pageable
+
++specifications ,predicate, full text search (sql)
++ tìm kiếm một hồi r cũng quay lại với native SQL vì không xử lí được các số liệu với nhiều định dạng khác nhau.
++Ordinal parameter not bound : 2 và thêm + trước ?2
++.as(String.class) trong specification.
++ object trong specification,
++Like +%
++ sử dụng native query nó sẽ sử dụng tên của bảng trong DB, còn nếu xài JPQL thì nó xài tên của class entity tham chiếu tương ứng. Vì vậy khi 1 repository mà viết bằng cả 2 loại thì khá mệt nếu câu truy vấn dài và có sắp xếp ( đơn giản thì xài jpql nó dùng tên entity, phức tạp thì dùng native nó xài tên bảng.)
++ khi làm việc với product ( tìm kiếm, sắp xếp) mình nhận ra brand, category, description cần phải có một bảng riêng để tiện cho việc thiết kế và thay đổi sau này, cũng cần có 1 bảng specification nữa.. nên mình làm lại database. Bên cạnh đó đối với specificationmình sẽ nhận vào map <String
+                   , String> tương ứng với PARAMETERvà detail, làm gần giống với orders và order_items. còn description thì sẽ có 2 lựa chọn là html hoặc text đơn giản. Mình có nghĩ phức tạp quá không nhỉ ?  y như đập mới xây lại vậy, mà làm cho cho vui thôi :D nghĩ ra mà không làm nó ngứa vãi.
++ text-transform: capitalize  hay style khác không áp dụng cho kiểu [[${value}]].
++  java.lang.Long cannot be cast to java.lang.Integer khi làm việc với BrandService vì brand id là int, còn count của sql nó trả về long. dm
++JPA allows usage of subqueries in WHERE or HAVING clauses. Subqueries must be surrounded by parentheses. không cho phép trên FROM. NÊN POPULAR VÀ BEST SELLER  khó ở chổ covert sang jpql. vì khi join phải sắp xếp theo tiêu chí bán dduowwcj bao nhiêu lần hay bán được số lượng bao nhiêu, có sản phẩm không bán được nữa ( null ). tìm mọi cách cả buổi mà khoonng được, chuyến sang Specifications mà không ổn vì khi join nó phải xác định bảng tương ứng với class name bên java --> làm một bảng tên như là soldProducts trong db, dùng các Procedure, trigger để thêm vào. sau đó xài như bảng bình thường, khỏi specification gì hết.
++ jpa không hỗ trợ limit -> dùng phân trang để get số lượng  giá trị cũng dc.
++ đại khái là đã xong về việc chỉnh db, product detail gần đầy đủ. Nhưng mà đến cái review thì có chuyện khác, ban đầu chưa tính làm review, nhưng h thấy có hứng nên làm luôn, mà review phải có đánh giá bằng sao luôn , có hình ảnh luôn,  sau này thêm một cái sort theo rating. mà phân vân là việc ai cũng review được, hay chỉ những người đã mua mới review ( như bên tiki , lấy ý tưởng bên tiki khá nhiều :D ). vậy sẽ thêm thuộc tính rating vào product và review_ID được tham chiếu tới bảng review , quan hệ 1 sản phẩm có nhiều review( rating) , à vậy phải có trigger + hàm làm tròn nữa, nhiều việc quá nhờ.
++ mà cái review bây h minh đi theo hướng của tiki luôn, tức là 1 sản phẩm chỉ được review bởi người đã mua hàng , nếu không mua thì có thể trả lời trong review của người khác  ( sup-review). Vậy nếu một người muốn reivew nhưng làm biến xem lại order ? - > làm một trang đại loại như "review sản phẩm đã mua" . À mà bên tiki có luôn, có vẻ hợp rơ! mà như vậy có nhiều quá không, coi như làm gấp 2.5 lần khi làm với order á.... thôi, bỏ cái sup-review đi, chừng nào làm cho bên lớn hẵng làm ! Đầu tiên là thêm các bảng, cột trong db cái đã.
++ cái review có nên thêm ảnh không. tạm thời chỉ dùng 1 hình ảnh thôi đi.
++ bên tiki nó đóng modal, show new modal và tắt khả năng review sau khi review ( tức chỉ review 1 lần ). mà mình éo rảnh nên cứ đã mua là được phép review luôn, review bao nhiêu lần cũng được ( cái này bên business yêu cầu thôi.)
++ tiếp nhận cái mới Form Data  của html5. thật ra mình làm theo các cổ điển ok rồi nhưng mà kiểu phải gắn id khắp nơi r phải nhớ mà gọi nên mệt.cai form data này hay vãi.tiện
++ um, giả sử tên file giống nhau thì sao ?  nó ghi đè, đồng nghĩ là mất file ban đầu hay lệch nội dung review, vậy phải tạo ra một tên cho file là độc nhất.
++SimpleDateFormat("yyyy-mm-dd") có vấn đề khi luôn set tháng là 1. --> mm  to MM
++data-toggle vs tab-content không hoạt động đúng cách, nó chỉ hiện được 1 lần, lần sau không hiển thị được phần tử đầu tiên ( description).--> vì một lý do ngớ ngẫn nào đó mà không hoạt động với jquery 3.4.1 mà hoạt động với jquery 2.2.4, rầu mọi thứ tùm lum lên, cuối cùng xóa trang, viết lại ok bình thường.  bài học rút ra là ( đừng cố gắn sửa, chỉ cần đập bỏ làm lại :D )
++Related product, cái này phải cho products cái tag mới tìm, tạm thời mình chọn top bán chạy của các sản phẩm cùng catrgory hoặc brand
++ đụng lại phân trang, muốn làm nó tối ưu hơn, như là chỉ hiển thị tối đa 5 nút, nhuw tiki vaayj, maf tiki nos xaif ajjax khoong ta ?kiểm tra tháy nó xài, trong khi chờ ajax load, nó làm mờ trang
++ dùng th:block làm xuất hiện mũi tên trong paginnation
++Cannot call sendError() after the response has been committed --> ingonJson
++ vấn đề không appen được khi ajax vì gọi đối tượng trong đối tuowngj  ( revoew.product.id)--> mình ghĩ ra giải pháp tạm thời đó là thay vì đưa List Review rồi mình code nó ra html để đưa vào trang, sao mình khong códe nó sang html trước rồi mới gởi. nó hơi xấu, cứng nhưng sẽ sử dụng được.... sau một hồi mà thì thấy nó hoạt động giống cái ResponseEntity. hài. , lần ra nữa được cái  này https://stackoverflow.com/questions/26320106/spring-return-responsebody-responseentitylistjsonobject.  nghĩ nó hài. biến tấu khác hay hơn là listJSON object, lấy cái mình cần đua ra cho nó.
++ không nhận th:*. phải chuyển về html bt vs js để xử lý -> OK xong
++ Cái DataTable hay phết, có 1 cái giống vậy nữa là fileInput
++ tạo mới product mà quên cái specification :D . suy nghĩ nhập nó ntn đây. --> cách nhanh gọn là lưu dưới dạng chuỗi theo  định dạng 9 báo cho người nhập biết ) rrooifgowir bằng fromdata, tách ra và lưu trong setSpecification. Á Đù, nếu vậy thì đọc sao khi mà bên view chỉ có một cái danh sách, chả nhẽ mình code chuyển đổi trên html ? VL.. đã thử nhưng vid thymleaf khong giữ biến gobal. vậy thì mình gởi String theo controller luôn. à mà trong from không sử dụng repsitory được nên khi set vào vẫn là String, còn edcode sẽ để bên controller.
++ bật khóc khi cái edit, create nó đưa ảnh lên server rồi nhưng web không load được .  bất lực vì đường dẫn chính xác nhưng ảnh không lên.tắt máy ngủ dậy lại lên. dm
++ một vấn đề nữa là không vì imagesPath lấy id của product làm chuẩn nên chưa isert thì không có id. vì vậy bước tạo thật ra tạo 2 lần để lấy ID.  Đã tham khảo gg và bên microsoft thì đều v, chỉ tạo khi created
++ code điên đến độ IDE nó lỗi xác định luôn. bảo lớp Model cần @anotation
++OAuth2 với o7 thì nó xài hướng entity vs dao nhưng sử dụng cofig bằng application quen thuộc. vói video code java thì dùng file yml.
+dùng cả ngày để thử cả hai nhưng bị lỗi. sửa một hồi thì IDE hiện lỗi Model .Could not autowire. No beans of 'Model' type found.  à hóa ra là lúc ình xóa phần thừa, quên xóa @autowwrite
++ lỗi tùm lum. không hiểu tại sao comment tag html rồi mà vẫn đọc để bị lỗi
++ dùng cả 2 OAuth2 và Basic cho xác thực. làm theo cách của mình, hơi kỳ nhưng chạy được
++ remember me isnt working, Vấn đề đầu tiên đến h vẫn chưa được giải quyết !
++ sau 5 ngày, nó làm mình tuyệt vọng.
++ Hài sau gần 7 ngày . Vì xử dụng getUsserByEmail trong CustomOAuth2User luôn luôn trả về null, nên mình nghĩ là không có cách map Oauth2 vs database, hôm nay mình cho nó nhận user từ constructor ,lấy user từ lớp CustomOAuth2UserService gởi qua CustomOAuth2User(oauth2User, user) thế lại nhận ra user, từ đó lấy getAuthorities ra bằng việc bao lại bằng lớp MyUserDetail.
++Vấn đề nghĩ nhiều nữa : nếu lưu cartItems vào cookie, lỡ 1 mặt hàng bị xóa/ hết hàng,.... thò phải xử lú nữa, kiểu như thêm 1 bộ lọc vậy. mệt. mà đằng nào cũng phải vậy. cơ mà db mình chưa thiết kế như v, nên tạm thời cứ để đi
++ try cach để phân biệt người dùng , vì getUser mà bị null thì nó ném lỗi chứ khoong trả về null
++ làm việc với guest cart cookie,  quên set path nên nó lưu 2 cookie same name.  nó làm ẩn đi nữa, phải ngồi vào từng trang mà xóa vì path theo id product.
++ hơi bối rối vì action khi guest có cart trong cookie đăng nhập. Minhf có nên mege lại không, hay là overwrite 1 trong 2 bên.  hay là chỉ overwrite khi chưa co trong db.
++ mình co coi lại tiki và lazada thì việc lưu giỏ hàng thực hiện với database, khong có của guest. Có nên áp dụng?. nếu vậy thì cả buổi nghiên cứu encode và decode cho việc lưu cookie của mình đi tong vô nghĩa :D
++ các vấn đề khi cố mege cart :
+1)  làm sao biết khi nào cookie bật, tắt, nếu xài js gọi navigator.cookieEnabled thì có thể xác định , sau đó điều hướng tới trang cookie require.  nhưng nếu ở trang cookie require bật cookir rồi reload nó phải chuyển sang trang khác tức là controller phía bên spring phải biết khi nào thì cooki bật / tắt. Để giải quyết, mình dùng filter add 1 cookie mặc định và đọc nó, nếu không đọc được , cookie rỗng thì tức là cookie bị tắt, khi đó dùng request.getRequestDispatcher hay respone.sendRedirect để chuyển hướng trang. Chắc ok
+2) Hoàn toàn méo ok chút nào, request.getRequestDispatcher  có thể chuyển đến trang tuy nhiên nó bỏ qua js/css. nên nhình như cục shit vật chưa kể bỏ qua js nên các event không hoạt động,... còn respone.sendRedirect  thì nó gởi quá nhiều redirect ! vì filter nằm trong servelet chứ không phải  spring boot support. Vậy cái spring support giống với filter là gì  : --> Interceptor  ố dè!
+2.1) Khi dùng Interceptor  , cố redirect trong phương thức preHandle sẽ gây bỏ qua js/css như 2. dùng postHandle thì ok
++ amost done, xứ lý casrt guest null khi không làm hoạt động với cart
+           </String>   </pre>
+        </div>
+    </div>
+</div>
+<!-- Contact End -->
+
+<footer th:include="/normal/footer.html"></footer>
+<!-- Back to Top -->
+<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+<!-- JavaScript Libraries -->
+<script th:src="@{/js/main.js}"></script>
+<!--<script th:src="@{/js/ajax_cart.js}"></script>-->
+</body>
+</html>

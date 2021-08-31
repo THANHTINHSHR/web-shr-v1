@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>OTP INPUT</title>
+    <link th:href="@{/img/favicon.ico}" rel="icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap"
+          rel="stylesheet">
+
+    <!-- CSS Libraries -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link th:href="@{/lib/slick/slick.css}" rel="stylesheet">
+    <link th:href="@{/lib/slick/slick-theme.css}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link th:href="@{/css/root-style.css}" rel="stylesheet">
+    <link th:href="@{/css/register.css}" rel="stylesheet">
+
+</head>
+<body>
+<header th:include="/normal/header.html"></header>
+<div class="container-fluid">
+    <section class="login-block">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <form class="md-float-material form-material" th:action="@{/otp-register}" method="POST" th:id="form-register">   </form>
+                        <div class="auth-box card">
+                            <div class="card-block">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3 class="text-center">Enter otp to active your account</h3>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <p class="text-center heading success">Account created, we send a verification otp
+                                        (6 character) to <span th:text="${email}"> </span> .</p>
+
+                                    <p class="text-center">OTP effective within 5 minutes</p>
+                                </div>
+
+                                <div class="form-group form-primary"><input type="text" class="form-control"
+                                                                            name="otp"
+                                                                            placeholder="Enter 6 otp character" id="otp"
+                                                                            required maxlength="6"  th:form="form-register">
+                                    <input type="hidden" name="email" th:value="${email}"  th:form="form-register">
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-12"><input type="submit"
+                                                                  class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20"
+                                                                  name="submit" value="Submit"  th:form="form-register">
+                                    </div>
+                                </div>
+                                <th:block th:if="${errorMess != null}">
+                                    <p class="alert alert-dismissible alert-danger error" th:text="${errorMess}"></p>
+                                    <br>
+                                    <form class="md-float-material form-material" th:action="@{/otp-resend}" method="post" th:id="form-resend"></form>
+                                    <div class="form-group form-primary">
+                                        <input type="hidden" name="email" th:value="${email}" th:form="form-resend">
+                                        <input type="submit"
+                                               class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20"
+                                               name="submit" value="Submit"  th:form="form-resend">
+                                    </div>
+
+                                    <!--                            </form>-->
+                                </th:block>
+                            </div>
+                        </div>
+<!--                    </form>-->
+
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

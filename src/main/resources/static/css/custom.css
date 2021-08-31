@@ -1,0 +1,96 @@
+/* table scroll begin
+source : https://stackoverflow.com/questions/17067294/html-table-with-100-width-with-vertical-scroll-inside-tbody/17380697
+
+ */
+table.scroll {
+    width: 100%; /* Optional */
+    /* border-collapse: collapse; */
+    border-spacing: 0;
+    border: 2px solid black;
+    word-wrap: break-word;
+
+}
+
+table.scroll tbody,
+table.scroll thead { display: block; }
+
+thead tr th {
+    height: 30px;
+    line-height: 30px;
+    table-layout: fixed;
+    /*text-align: left;*/
+
+}
+
+table.scroll tbody {
+    height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+tbody { border-top: 2px solid black; }
+
+tbody td, thead th {
+    /*width: 30%; !* Optional *!*/
+    border-right: 1px solid black;
+    overflow-x: hidden;
+    /*table-layout: fixed;*/
+    word-break: break-word;
+
+}
+/*tbody tr td div p{*/
+/* width: 20%;*/
+/*    overflow-y: auto;*/
+/*    overflow-x: auto;*/
+/*}*/
+
+/*tbody td:last-child, thead th:last-child {*/
+/*    width: 30%; !* Optional *!*/
+/*    border-right: none;*/
+/*}*/
+tbody th:first-child, thead th:first-child  {
+    width: 40%; /* Optional */
+    border-right: none;
+}
+
+/*table.auto, table.fixed {*/
+/*    border-collapse: separate;*/
+/*    width: 100%;*/
+/*    border: 1px solid gray;*/
+/*}*/
+/*table.auto td, table.fixed  td {*/
+/*    border: 1px solid gray;*/
+/*}*/
+/*table.auto {*/
+/*    table-layout: auto;*/
+/*}*/
+/*table.fixed {*/
+/*    table-layout: fixed;*/
+/*}*/
+
+/*table {*/
+/*    width: 100%;*/
+/*}*/
+
+/*!* Fixing width of first*/
+/**! column of each row*/
+/*thead th:nth-child(1) {*/
+/*       width: 30%;*/
+/*   }*/
+
+/*!*!* Fixing width of second*!*/
+/*!**! column of each row*!*/
+/*thead th:nth-child(2) {*/
+/*       width: 20%;*/
+/*   }*/
+
+/*thead th:nth-child(3) {*/
+/*       width: 20%;*/
+/*   }*/
+/*thead th:nth-child(4) {*/
+/*       width: 20%;*/
+/*   }*/
+/*thead th:nth-child(5) {*/
+/*    width: 10%;*/
+/*}*/
+/*table scroll end*/

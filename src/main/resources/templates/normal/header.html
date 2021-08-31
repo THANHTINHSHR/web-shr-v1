@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https//www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="utf-8">
+    <title>Header</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="eCommerce HTML Template Free Download" name="keywords">
+    <meta content="eCommerce HTML Template Free Download" name="description">
+
+    <!-- Favicon -->
+    <link th:href="@{/img/favicon.ico}" rel="icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap"
+          rel="stylesheet">
+
+    <!-- CSS Libraries -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link th:href="@{/lib/slick/slick.css}" rel="stylesheet">
+    <link th:href="@{/lib/slick/slick-theme.css}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link th:href="@{/css/root-style.css}" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+<!--<div sec:authorize="hasAnyRole('ADMIN','CUSTOMER')">-->
+<!--    <p>nly roled can see this</p>-->
+<!--    <div sec:authorize="hasRole('CUSTOMER')">-->
+<!--        This content is only shown for CUSTOMER.-->
+<!--    </div>-->
+<!--    <div sec:authorize="hasRole('ADMIN')">-->
+<!--        This content is only shown for ADMIN.-->
+<!--    </div>-->
+<!--</div>-->
+
+
+<!-- Top bar Start -->
+<div class="top-bar">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <i class="fa fa-envelope"></i>
+                Thanhtinh14.06.1998@gmail.com
+            </div>
+            <div class="col-sm-6">
+                <i class="fa fa-phone-alt"></i>
+                0356657722
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Top bar End -->
+
+<!--&lt;!&ndash; Nav Bar Start &ndash;&gt;-->
+<!--<div class="nav">-->
+<!--    <div class="container-fluid">-->
+<!--        <nav class="navbar navbar-expand-md bg-dark navbar-dark">-->
+<!--            <a href="#" class="navbar-brand">MENU</a>-->
+<!--            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">-->
+<!--                <span class="navbar-toggler-icon"></span>-->
+<!--            </button>-->
+
+<!--            <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">-->
+<!--                <div class="navbar-nav mr-auto">-->
+<!--                    <a href="/home" class="nav-item nav-link">Home</a>-->
+<!--                    <a href="/cart" class="nav-item nav-link">Cart</a>-->
+<!--                    <a href="/checkout" class="nav-item nav-link">Checkout</a>-->
+<!--                    <a href="/my-account" class="nav-item nav-link">My Account</a>-->
+<!--                    <a href="/contact" class="nav-item nav-link">Contact Us</a>-->
+<!--                    <a href="/logout" class="nav-item nav-link"> LogOut</a>-->
+
+<!--                </div>-->
+<!--                <div class="navbar-nav ml-auto">-->
+<!--                    <div sec:authorize="isAuthenticated()">-->
+<!--                        <div class="nav-item dropdown">-->
+<!--                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><span-->
+<!--                                    sec:authentication="name">USER NAME</span></a>-->
+<!--                            <div class="dropdown-menu">-->
+<!--                                <a href="/login" class="dropdown-item">Login</a>-->
+<!--                                <a href="/register" class="dropdown-item">Register</a>-->
+
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        </span>-->
+<!--                    </div>-->
+
+<!--                    <div sec:authorize="isAnonymous()">-->
+
+<!--                        <div class="nav-item dropdown">-->
+<!--                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">-->
+<!--                                USER NAME</a>-->
+<!--                            <div class="dropdown-menu">-->
+<!--                                <a href="/login" class="dropdown-item">Login</a>-->
+<!--                                <a href="/register" class="dropdown-item">Register</a>-->
+
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        </span>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </nav>-->
+<!--    </div>-->
+<!--</div>-->
+<!--&lt;!&ndash; Nav Bar End &ndash;&gt;-->
+
+<!-- Bottom Bar Start -->
+<div class="bottom-bar">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-md-3">
+                <div class="logo">
+                    <a href="/home">
+                        <img th:src="@{/img/logo.png}" alt="Logo">
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <form action="/product/search" method="get">
+                    <div class="search">
+                        <input type="text" name="searchText" placeholder="Search by name, category,brand">
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-3">
+                <div class="row " style="margin: 0 auto " >
+                    <div class="col-md-6">
+                    <div class="dropdown" >
+                        <div sec:authorize="isAuthenticated()">
+<!--                            <div class="nav-item dropdown">-->
+<!--                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span-->
+<!--                                        sec:authentication="name"></span></a>-->
+
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span
+                                    sec:authentication="name"></span>
+                            </button>
+                                <div class="dropdown-menu">
+<!--                                    <a href="/login" class="btn btn-block btn-outline">Login</a>-->
+<!--                                    <a href="/register" class="btn btn-block btn-outline">Register</a>-->
+                                    <a href="/my-account" class="btn btn-block btn-outline">My Account</a>
+                                    <a href="/contact" class="btn btn-block btn-outline">Contact Us</a>
+                                    <a href="/logout" class="btn btn-block btn-outline"> LogOut</a>
+                                </div>
+<!--                            </div>-->
+<!--                            </span>-->
+                        </div>
+
+                        <div sec:authorize="isAnonymous()">
+
+<!--                            <div class="nav-item dropdown" >-->
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Login / Register </a>
+                                <div class="dropdown-menu">
+                                    <a href="/login" class="btn btn-block btn-outline">Login</a>
+                                    <a href="/register" class="btn btn-block btn-outline">Register</a>
+                                        <a class="btn btn-block btn-outline" th:href="@{/oauth2/authorization/google}"><img th:src="@{/img/google-logo.png}">Continue using Google</a>
+                                </div>
+<!--                            </div>-->
+<!--                            </span>-->
+                        </div>
+                    </div>
+                    </div>
+                    <div class="user col-md-6">
+                        <a th:href="@{/cart}" class="btn cart">
+                            <i class="fa fa-shopping-cart"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Bottom Bar End -->
+
+
+<!-- Back to Top -->
+<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+<!-- JavaScript Libraries -->
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script th:src="@{/lib/easing/easing.min.js}"></script>
+<script th:src="@{/lib/slick/slick.min.js}"></script>
+
+<!-- Template Javascript -->
+
+<script th:src="@{/js/main.js}"></script>
+<!-- custom js -->
+<!--    <script th:src ="@{/js/custom.js}"></script>-->
+</body>
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>[[${product.name}]]</title>
+
+    <!-- Favicon -->
+    <link th:href="@{/img/favicon.ico}" rel="icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap"
+          rel="stylesheet">
+
+    <!-- CSS Libraries -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link th:href="@{/lib/slick/slick.css}" rel="stylesheet">
+    <link th:href="@{/lib/slick/slick-theme.css}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link th:href="@{/css/root-style.css}" rel="stylesheet">
+
+
+</head>
+<body>
+<header th:include="/normal/header.html"></header>
+
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-wrap">
+    <div class="container-fluid">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/home">Home</a></li>
+            <li class="breadcrumb-item active">Products-Product Detail</li>
+        </ul>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Product Detail Start -->
+<div class="product-detail">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="product-detail-top">
+                    <div class="row align-items-center">
+                        <div class="col-md-5">
+                            <div class="product-slider-single normal-slider">
+                                <th:block th:each="image : ${images}">
+                                    <img th:src="@{'/img/'+ ${image}}" alt="Product Image">
+                                </th:block>
+                            </div>
+                            <div class="product-slider-single-nav normal-slider">
+                                <th:block th:each="image : ${images}">
+                                    <div class="slider-nav-img">
+                                        <img th:src="@{'/img/'+ ${image}}" alt="Product Image">
+                                    </div>
+                                </th:block>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="product-content">
+                                <div class="title"><h2>[[${product.getName()}]]</h2></div>
+
+                                <div class="price">
+                                    <h4>Price:</h4>
+                                    <!--                                    <p>$99 <span>$149</span></p>-->
+                                    <p class="currency" th:text="${product.getPrice()}"></p>
+                                </div>
+                                <div class="quantity">
+                                    <h4>Quantity:</h4>
+                                    <div class="qty">
+                                        <button class="btn-minus" th:pid="${product.id}"><i class="fa fa-minus"></i>
+                                        </button>
+                                        <input type="number" disabled th:value="1" th:id="'quantity' + ${product.id}">
+                                        <button class="btn-plus" th:pid="${product.id}"><i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!--                                <div class="p-size">-->
+                                <!--                                    <h4>Size:</h4>-->
+                                <!--                                    <div class="btn-group btn-group-sm">-->
+                                <!--                                        <button type="button" class="btn">S</button>-->
+                                <!--                                        <button type="button" class="btn">M</button>-->
+                                <!--                                        <button type="button" class="btn">L</button>-->
+                                <!--                                        <button type="button" class="btn">XL</button>-->
+                                <!--                                    </div>-->
+                                <!--                                </div>-->
+                                <!--                                <div class="p-color">-->
+                                <!--                                    <h4>Color:</h4>-->
+                                <!--                                    <div class="btn-group btn-group-sm">-->
+                                <!--                                        <button type="button" class="btn">White</button>-->
+                                <!--                                        <button type="button" class="btn">Black</button>-->
+                                <!--                                        <button type="button" class="btn">Blue</button>-->
+                                <!--                                    </div>-->
+                                <!--                                </div>-->
+                                <div class="action">
+                                    <!--                                    <a class="btn" th:href="@{ '/cart/add/'+${product.id}+'/1'}" ><i class="fa fa-shopping-cart"></i>Add to Cart</a>-->
+                                    <!--                                    <a class="btn" href="#"><i class="fa fa-shopping-bag"></i>Buy Now</a>-->
+
+                                    <button type="button" class="btn" th:href="@{#}" th:id="btnAddToCart"
+                                            th:pid="${product.id}"><i class="fa fa-shopping-cart"></i>Add to Cart
+                                    </button>
+                                    <p class="result"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row product-detail-bottom">
+                    <div class="col-lg-12">
+                        <ul class="nav nav-pills nav-justified">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="pill" href="#description">Description</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="pill" href="#specification">Specification</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="pill" href="#reviews">Reviews</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div id="description" class="container tab-pane active">
+                                <div class="product-description">
+                                    <h4>Product description</h4>
+                                    <p th:id="p-p-d" th:pden="${product.description}"></p>
+                                </div>
+                            </div>
+                            <div id="specification" class="container tab-pane fade">
+                                <h4>Product specification</h4>
+                                <div class="table-specification">
+                                    <table>
+                                        <tbody>
+                                        <th:block th:each="specification : ${product.specifications}">
+                                            <tr>
+                                                <td
+                                                        th:text="${specification.parameter}"></td>
+                                                <td
+                                                        th:text="${specification.detail}"></td>
+                                            </tr>
+                                        </th:block>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div id="reviews" class="container tab-pane fade">
+                                <th:block th:if="${reviews.size() != 0}">
+
+                                <div class="container-fluid">
+                                    <div class="col">
+                                        <div th:class="reviews">
+                                            <th:block th:each="review : ${reviews}">
+                                                <div class="reviews-submitted">
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <div class="reviewer">
+                                                                <p th:class="reviewer-name"
+                                                                   th:text="${review.user.name}"></p>
+                                                                <p class="create-time"
+                                                                   th:text="${'Create time : ' +review.createTime}"></p>
+                                                                <p class="buy-time"
+                                                                   th:text="${'Buy time : '+review.buyTime}"></p>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-md-9">
+                                                            <div class="ratting">
+                                                                <i th:class="${(review.rating>= 1)? 'fa fa-star light':'fa fa-star'}"></i>
+                                                                <i th:class="${(review.rating >= 2)? 'fa fa-star light':'fa fa-star'}"></i>
+                                                                <i th:class="${(review.rating >= 3)? 'fa fa-star light':'fa fa-star'}"></i>
+                                                                <i th:class="${(review.rating >= 4)? 'fa fa-star light':'fa fa-star'}"></i>
+                                                                <i th:class="${(review.rating >= 5)? 'fa fa-star light':'fa fa-star'}"></i>
+                                                            </div>
+                                                            <p th:text="${review.review}">
+                                                            </p>
+                                                            <th:block th:if="${review.image != null}">
+                                                                <img class="review-image"
+                                                                     th:src="${'/img/Review_Images/product_'+ product.id+'/'+review.image }"/>
+                                                            </th:block>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </th:block>
+                                        </div>
+                                    </div>
+
+                                    <!-- PAGINATION -->
+                                    <th:block th:if="${totalPages>1}">
+                                        <!-- default page 1 active -->
+                                        <div>
+                                            <ul class="pagination justify-content-center" style="margin:20px 0"
+                                                th:totalPages="${totalPages}" th:pid="${product.id}">
+                                                <th:block th:each="i : ${#numbers.sequence(1,totalPages)}">
+                                                    <li th:class="${(i==1)?'page-item active':'page-item' }"><a
+                                                            class="page-link">[[${i}]]</a></li>
+
+                                                </th:block>
+
+                                            </ul>
+                                        </div>
+                                    </th:block>
+                                </div>
+                                </th:block>
+                                <th:block th:if="${reviews.size() == 0}">
+                                    <p>NO REVIEW YET!</p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- related products -->
+            </div>
+            <!-- Side Bar Start -->
+            <div class="col-lg-3 sidebar">
+                <div class="sidebar-widget category">
+                    <h2 class="title">Category</h2>
+                    <nav class="navbar bg-light">
+                        <ul class="navbar-nav">
+                            <li class="nav-item"><a class="nav-link category" href="/"><i
+                                    class="fa fa-home"></i>Home</a></li>
+                            <th:block th:each="category : ${categories}">
+                                <li class="nav-item"><a class="nav-link category"
+                                                        th:href="@{'/product/category/'+${category.id}+'/a/1'}"><i
+                                        th:class="${category.classIcon}"></i>[[${category.name}]]</a></li>
+                            </th:block>
+                        </ul>
+                    </nav>
+                </div>
+
+                <div class="sidebar-widget widget-slider">
+                    <h2 class="title">Same Brand</h2>
+                    <div class="sidebar-slider normal-slider">
+                        <th:block th:each="product : ${productsSameBrand}">
+
+                            <div class="product-item">
+
+                                <div class="product-image">
+                                    <a th:href="${'/product/'+product.id}">
+                                        <img th:src="@{${'/img/'+product.imagesPath+'/'+product.firstImage}}"
+                                             alt=${'Image' + product.name}>
+                                    </a>
+                                </div>
+                                <div class="product-title">
+                                    <p class="product-name text-limit" th:text="${product.name}"></p>
+                                    <div class="ratting">
+                                        <i th:class="${(product.rating>= 1)? 'fa fa-star light':'fa fa-star'}"></i>
+                                        <i th:class="${(product.rating >= 2)? 'fa fa-star light':'fa fa-star'}"></i>
+                                        <i th:class="${(product.rating >= 3)? 'fa fa-star light':'fa fa-star'}"></i>
+                                        <i th:class="${(product.rating >= 4)? 'fa fa-star light':'fa fa-star'}"></i>
+                                        <i th:class="${(product.rating >= 5)? 'fa fa-star light':'fa fa-star'}"></i>
+                                    </div>
+                                    <p class="product-price currency" th:text="${product.price}"></p>
+                                </div>
+
+                            </div>
+                        </th:block>
+                    </div>
+                </div>
+
+                <div class="sidebar-widget brands">
+                    <h2 class="title">Our Brands</h2>
+                    <ul>
+                        <th:block th:each="brand : ${brands}">
+                            <li><a th:href="@{'/product/brand/'+${brand.id}+'/a/1'}"
+                                   th:text="${brand.name}"></a><span th:text="${brand.amount}"></span></li>
+                        </th:block>
+                    </ul>
+                </div>
+
+
+            </div>
+            <!-- Side Bar End -->
+
+
+        </div>
+        <div class="product">
+            <div class="section-header">
+                <h1>Related Products</h1>
+            </div>
+
+            <div class="row align-items-center product-slider product-slider-4">
+                <th:block th:each="product : ${relatedProducts}">
+                    <div class="col-lg-3">
+                        <div class="product-item-slider">
+
+                            <div class="product-image">
+                                <a th:href="${'/product/'+product.id}">
+                                    <img th:src="@{${'/img/'+product.imagesPath+'/'+product.firstImage}}"
+                                         alt=${'Image' + product.name}>
+                                </a>
+                            </div>
+                            <div class="product-title">
+                                <p class="product-name text-limit" th:text="${product.name}"></p>
+                                <div class="ratting">
+                                    <i th:class="${(product.rating>= 1)? 'fa fa-star light':'fa fa-star'}"></i>
+                                    <i th:class="${(product.rating >= 2)? 'fa fa-star light':'fa fa-star'}"></i>
+                                    <i th:class="${(product.rating >= 3)? 'fa fa-star light':'fa fa-star'}"></i>
+                                    <i th:class="${(product.rating >= 4)? 'fa fa-star light':'fa fa-star'}"></i>
+                                    <i th:class="${(product.rating >= 5)? 'fa fa-star light':'fa fa-star'}"></i>
+                                </div>
+                                <p class="product-price currency" th:text="${product.price}"></p>
+                            </div>
+
+                        </div>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Product Detail End -->
+
+
+<footer th:include="/normal/footer.html"></footer>
+
+<!-- Back to Top -->
+<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+<!-- JavaScript Libraries -->
+<!--<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>-->
+<!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>-->
+<script th:src="@{/lib/easing/easing.min.js}"></script>
+<script th:src="@{/lib/slick/slick.min.js}"></script>
+
+<!-- Template Javascript -->
+<script th:src="@{/js/main.js}"></script>
+<!-- custom js -->
+<script th:src="@{/js/ajax_product_details.js}"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Order Success</title>
+    <!-- Favicon -->
+    <link th:href="@{/img/favicon.ico}" rel="icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap"
+          rel="stylesheet">
+
+    <!-- CSS Libraries -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link th:href="@{/lib/slick/slick.css}" rel="stylesheet">
+    <link th:href="@{/lib/slick/slick-theme.css}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link th:href="@{/css/root-style.css}" rel="stylesheet">
+
+</head>
+<header th:include="@{/normal/header.html}"></header>
+<body>
+
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-wrap">
+    <div class="container-fluid">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/home">Home</a></li>
+            <li class="breadcrumb-item active">Order success</li>
+        </ul>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="order-success">
+                <h2> Order success, your order id is <a th:href="${'/my-account/orders/view/'+order.orderId}" th:text="${'#'+order.orderId}"></a></h2>
+                <div class="order-info">
+                    <h2>Order info</h2>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Recipient:</label>
+                            <label th:text="${order.recipient}"></label>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Email:</label>
+                            <label th:text="${order.email}"></label>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Phone:</label>
+                            <label th:text="${order.phone}"></label>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Shipping address:</label>
+                            <label th:text="${order.shippingAddress}"></label>
+                        </div>
+                        <div class="col-md-12">
+                            <label>Note:</label>
+                            <label th:text="${order.note}"></label>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Grand Total:</label>
+                            <label th:text="${order.grandTotal}"></label>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Payment method:</label>
+                            <label th:text="${order.paymentMethod.description}"></label>
+                        </div>
+                        <div class="col-md-12">
+                            <label>Order will be delivered within a period of time:</label>
+                            <label th:text="${order.earlyDeliveryTime + ' to ' + order.lateDeliveryTime}"></label>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+
+<footer th:include="@{/normal/footer.html}"></footer>
+<!-- Back to Top -->
+<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+<!-- JavaScript Libraries -->
+<script th:src="@{/js/main.js}"></script>
+<!--<script th:src="@{/js/ajax_cart.js}"></script>-->
+</body>
+</html>

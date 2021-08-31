@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Account Orders</title>
+    <!-- Favicon -->
+    <link th:href="@{/img/favicon.ico}" rel="icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap"
+          rel="stylesheet">
+
+    <!-- CSS Libraries -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link th:href="@{/lib/slick/slick.css}" rel="stylesheet">
+    <link th:href="@{/lib/slick/slick-theme.css}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link th:href="@{/css/root-style.css}" rel="stylesheet">
+    <link th:href="@{/css/my-account.css}" rel="stylesheet">
+    <!--    <link th:href="@{/css/table-scroll2.css}" rel="stylesheet">-->
+
+</head>
+<body>
+<header th:include="@{/normal/header.html}"></header>
+
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-wrap">
+    <div class="container-fluid">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/home">Home</a></li>
+            <li class="breadcrumb-item active"> <a href="/my-account">My Account</a></li>
+        </ul>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- My Account Start -->
+<div class="my-account">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link" id="notification-nav" href="/my-account/account-notification"
+                       role="tab"><i class="fa fa-bell"></i>Notification</a>
+                    <a class="nav-link active" id="orders-nav" href="/my-account/account-orders" role="tab"><i
+                            class="fa fa-shopping-bag"></i>Orders</a>
+                    <a class="nav-link" id="account-nav" href="/my-account/account-details" role="tab"><i
+                            class="fa fa-user"></i>Account Details</a>
+                    <!--                    <a class="nav-link" id="account-nav" data-toggle="pill" th:href="/my-account/account-details" role="tab"><i-->
+                    <!--                            class="fa fa-user"></i>Account Details</a>-->
+                    <a class="nav-link" href="/logout"><i class="fa fa-sign-out-alt"></i>Logout</a>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="orders-tab" role="tabpanel" aria-labelledby="orders-nav">
+                        <th:block th:if="${orders.size()!=0}">
+                        <div class="order-bar">
+                            <div class="container-fluid">
+                                <div class="row align-items-center">
+
+                                    <div class="col-lg-8">
+                                        <div class="search">
+                                            <input th:id="order-search-input" type="text"
+                                                   placeholder="Search text">
+                                            <button><i class="fa fa-search" th:id="order-search-btn"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="custom-control sort-by">
+
+                                            <select class="custom-select-sm" name="sortBy" th:id="sort-by">
+                                                <option value="CD-OTN" selected>Date old to new
+                                                <option value="CD-NTO">Date new to old
+                                                <option value="GT_MiTMa">Total min to max
+                                                <option value="GT_MaTMi">Total max to min
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                            <div class="col">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" th:id="user_orders">
+                                        <thead class="thead-dark">
+                                        <tr>
+                                            <th width="20%">Order ID</th>
+                                            <th width="30%">Date</th>
+                                            <th width="20%">Grand total</th>
+                                            <th width="20%">Status</th>
+                                            <th width="10%">Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody height="500px" class="user-order-body">
+                                        <th:block th:each="order,status : ${orders}">
+                                            <tr>
+                                                <td width="20%">[[${order.orderId}]]</td>
+                                                <td width="30%">[[${order.createDate}]]</td>
+                                                <td class="currency" width="20%">[[${order.grandTotal}]]</td>
+                                                <td width="20%">[[${order.status}]]</td>
+                                                <td width="10%">
+
+                                                    <a th:href="${'/my-account/orders/view/'+order.orderId}">
+                                                        <button class="btn" th:id="view-order-btn">View</button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </th:block>
+                                        </tbody>
+
+                                    </table>
+                                    <ul class="pagination justify-content-center" style="margin:20px 0">
+                                        <li class="page-item"><a class="page-link">Previous</a></li>
+                                        <span th:each="i : ${#numbers.sequence(1,totalPages)}">
+                                        <th:block th:if="${i == 1}">
+                                            <li class='page-item active'><a class='page-link'> [[${i}]]  </a></li>
+                                        </th:block>
+                                        <th:block th:if="${i !=1}">
+
+                                             <li class='page-item'><a class='page-link'> [[${i}]]  </a></li>
+
+                                        </th:block>
+                                    </span>
+                                        <li class="page-item"><a class="page-link">Next</a></li>
+                                    </ul>
+
+                                </div>
+                                <p th:id="orders-empty" style="text-align: center"></p>
+
+                            </div>
+                        </th:block>
+                        <th:block th:if="${orders.size()==0}">
+                            <div class="ui-state-error-text">
+                                <h2>Your order is empty</h2>
+
+                            </div>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- My Account End -->
+
+<footer th:include="@{/normal/footer.html}"></footer>
+<!-- Back to Top -->
+<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+<!-- JavaScript Libraries -->
+<script th:src="@{/js/main.js}"></script>
+<script th:src="@{/js/my_account.js}"></script>
+<!--<script th:src="@{/js/ajax_cart.js}"></script>-->
+</body>
+</html>

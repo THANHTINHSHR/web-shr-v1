@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>ORDER Detail for [[${order.orderId}]]</title>
+    <!-- Favicon -->
+    <link th:href="@{/img/favicon.ico}" rel="icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap"
+          rel="stylesheet">
+
+    <!-- CSS Libraries -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link th:href="@{/lib/slick/slick.css}" rel="stylesheet">
+    <link th:href="@{/lib/slick/slick-theme.css}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link th:href="@{/css/root-style.css}" rel="stylesheet">
+    <link th:href="@{/css/my-account.css}" rel="stylesheet">
+    <!--    <link th:href="@{/css/table-scroll2.css}" rel="stylesheet">-->
+    <!-- custom css -->
+
+    <link th:href="@{/css/order-details.css}" rel="stylesheet">
+    <link th:href="@{/css/table-scroll.css}" rel="stylesheet">
+
+</head>
+<body>
+<header th:include="@{/normal/header.html}"></header>
+
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-wrap">
+    <div class="container-fluid">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/home">Home</a></li>
+            <li class="breadcrumb-item active"><a th:href="@{/my-account}">My Account</a></li>
+            <li class="breadcrumb-item"><a th:href="${'/my-account/orders/view/'+order.orderId}">Order details</a></li>
+        </ul>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- My Account Start -->
+<div class="my-account">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link" id="notification-nav" href="/my-account/account-notification"
+                       role="tab"><i class="fa fa-bell"></i>Notification</a>
+                    <a class="nav-link active" id="orders-nav" href="/my-account/account-orders" role="tab"><i
+                            class="fa fa-shopping-bag"></i>Orders</a>
+                    <a class="nav-link" id="account-nav" href="/my-account/account-details" role="tab"><i
+                            class="fa fa-user"></i>Account Details</a>
+                    <a class="nav-link" href="/logout"><i class="fa fa-sign-out-alt"></i>Logout</a>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="orders-tab" role="tabpanel" aria-labelledby="orders-nav">
+
+                        <!-- order detail header -->
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="order-info">
+                                        <div class="order-header">
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <h2> Order details for <i th:text="${'#'+order.orderId}"></i></h2>
+                                                </div>
+                                                <div class="col-md-4" style="text-align: right">
+                                                    <h8 width="20%"> Date create is <b
+                                                            th:text="${order.createDate}"></b></h8>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="order-main">
+
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="order-main-child">
+                                                        <div class="child-title">
+                                                            <p> recipient address
+                                                            </p>
+                                                        </div>
+                                                        <div class="child-box">
+                                                            <p><b th:text="${order.recipient}"></b></p>
+                                                            <p th:text="${'Address: ' + order.shippingAddress}"></p>
+                                                            <p th:text="${'Phone: ' + order.phone}"></p>
+                                                            <th:block
+                                                                    th:if="${order.email != null && order.email != ''}">
+                                                                <p th:text="${'Email: ' + order.email}"></p>
+                                                            </th:block>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <div class="order-main-child">
+                                                        <div class="child-title">
+                                                            <p> shipping method
+                                                            </p>
+                                                        </div>
+                                                        <div class="child-box">
+                                                            <p><img class="img"
+                                                                    th:src="${order.shippingMethod.image}">
+                                                                [[${order.shippingMethod.name}]]
+                                                            </p>
+                                                            <p th:text="${order.shippingMethod.description}"></p>
+                                                            <p th:text="${'Delivery in ' +order.shippingMethod.earlyDay +' to ' + order.shippingMethod.lateDay +' day'}"></p>
+                                                            <p th:text="${'Shipping cost ' + order.shippingMethod.shippingCost}"></p>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="order-main-child">
+                                                        <div class="child-title">
+                                                            <p> payment method
+                                                            </p>
+                                                        </div>
+                                                        <div class="child-box">
+
+                                                            <p><img class="img"
+                                                                    th:src="${order.paymentMethod.image}">
+                                                                [[${order.paymentMethod.name}]]
+                                                            </p>
+                                                            <p th:text="${order.paymentMethod.description}"></p>
+                                                            <i th:if="${order.status == 'FINISH'}">Thanh toán
+                                                                thành công</i>
+                                                            <i th:if="${order.status == 'CANCEL'}">Đơn hàng đã bị hủy
+                                                                lý</i>
+                                                            <i th:if="${order.status != 'FINISH' && order.status != 'CANCEL'}">Đơn
+                                                                hàng đang
+                                                                trong quá trình xử lý
+                                                                lý</i>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <th:block th:if="${order.note != null && order.note != ''}">
+                                                <p th:text="${'Note: ' + order.note}"></p>
+                                            </th:block>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- ORDER TABLE ITEMS START -->
+                    <div class="container-fluid">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-scroll order-items">
+                                <thead class="thead-dark">
+                                <tr>
+                                    <th width="60%">PRODUCT</th>
+                                    <th width="10%">QUANTITY</th>
+                                    <th width="15%">PRICE</th>
+                                    <th width="15%">TOTAL</th>
+                                </tr>
+                                </thead>
+                                <tbody class="align-middle">
+                                <th:block th:each="orderItem,status : ${orderItems}"
+                                          th:with="product = ${orderItem.product}, price = ${orderItem.product.price}, quantity = ${orderItem.quantity}, total = ${orderItem.product.price * orderItem.quantity}">
+
+                                    <tr>
+                                        <td width="60%">    <div class="row">
+                                            <div class="col-md-2">
+                                                <a class="img" th:href="${'/product/'+product.id}"
+                                                   target="_blank"><img
+                                                        th:src="@{'/img/'+${product.getImagesPath()} +'/'+ ${product.getFirstImage()}}"
+                                                        alt="Image"></a>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <a th:href="${'/product/'+product.id}" target="_blank">
+                                                    <p class="product-name">
+                                                        <th:block th:text="${product.getName()}"></th:block>
+                                                    </p>
+                                                </a>
+
+
+                                                    <!-- REVIEW MODEL START-->
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                            th:data-target="${'#reviewModal'+product.id}"
+                                                            data-whatever="@fat">Write
+                                                        review
+                                                    </button>
+
+                                                    <div class="modal fade" th:id="${'reviewModal' + product.id}"
+                                                         tabindex="-1"
+                                                         role="dialog" aria-labelledby="exampleModalLabel"
+                                                         aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+
+                                                                    <a class="img"
+                                                                       th:href="${'/product/'+product.id}"
+                                                                       target="_blank"><img
+                                                                            th:src="@{'/img/'+${product.getImagesPath()} +'/'+ ${product.getFirstImage()}}"
+                                                                            alt="Image"></a>
+
+                                                                    <p class="modal-title-name" id="exampleModalLabel"
+                                                                       th:text="${product.name}"></p>
+                                                                    <button type="button" class="close"
+                                                                            data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+
+                                                                </div>
+                                                                <form  th:id="${'form-'+ product.id}" th:pid ="${product.id}" class="form-review">
+                                                                    <div class="modal-body">
+
+                                                                        <div class="form-group">
+                                                                            <div class="page__demo">
+                                                                                <div class="rating">
+                                                                                    <input type="radio"
+                                                                                           name="ratingStar"
+                                                                                           class="rating__control screen-reader"
+                                                                                           th:id="${'rc1'+ product.id}" th:value="1" >
+                                                                                    <input type="radio"
+                                                                                           name="ratingStar"
+                                                                                           class="rating__control screen-reader"
+                                                                                           th:id="${'rc2'+ product.id}" th:value="2">
+                                                                                    <input type="radio"
+                                                                                           name="ratingStar"
+                                                                                           class="rating__control screen-reader"
+                                                                                           th:id="${'rc3'+ product.id}" th:value="3" th:checked="true">
+                                                                                    <input type="radio"
+                                                                                           name="ratingStar"
+                                                                                           class="rating__control screen-reader"
+                                                                                           th:id="${'rc4'+ product.id}" th:value="4">
+                                                                                    <input type="radio"
+                                                                                           name="ratingStar"
+                                                                                           class="rating__control screen-reader"
+                                                                                           th:id="${'rc5'+ product.id}" th:value="5">
+                                                                                    <label th:for="${'rc1'+ product.id}"
+                                                                                           class="rating__item">
+                                                                                        <svg class="rating__star">
+                                                                                            <use xlink:href="#star"></use>
+                                                                                        </svg>
+                                                                                        <span class="screen-reader">1</span>
+                                                                                    </label>
+                                                                                    <label th:for="${'rc2'+ product.id}"
+                                                                                           class="rating__item">
+                                                                                        <svg class="rating__star">
+                                                                                            <use xlink:href="#star"></use>
+                                                                                        </svg>
+                                                                                        <span class="screen-reader">2</span>
+                                                                                    </label>
+                                                                                    <label th:for="${'rc3'+ product.id}"
+                                                                                           class="rating__item">
+                                                                                        <svg class="rating__star">
+                                                                                            <use xlink:href="#star"></use>
+                                                                                        </svg>
+                                                                                        <span class="screen-reader">3</span>
+                                                                                    </label>
+                                                                                    <label th:for="${'rc4'+ product.id}"
+                                                                                           class="rating__item">
+                                                                                        <svg class="rating__star">
+                                                                                            <use xlink:href="#star"></use>
+                                                                                        </svg>
+                                                                                        <span class="screen-reader">4</span>
+                                                                                    </label>
+                                                                                    <label th:for="${'rc5'+ product.id}"
+                                                                                           class="rating__item">
+                                                                                        <svg class="rating__star">
+                                                                                            <use xlink:href="#star"></use>
+                                                                                        </svg>
+                                                                                        <span class="screen-reader">5</span>
+                                                                                    </label>
+                                                                                </div>
+
+                                                                            </div>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                 style="display: none">
+                                                                                <symbol id="star" viewBox="0 0 26 28">
+                                                                                    <path d="M26 10.109c0 .281-.203.547-.406.75l-5.672 5.531 1.344 7.812c.016.109.016.203.016.313 0 .406-.187.781-.641.781a1.27 1.27 0 0 1-.625-.187L13 21.422l-7.016 3.687c-.203.109-.406.187-.625.187-.453 0-.656-.375-.656-.781 0-.109.016-.203.031-.313l1.344-7.812L.39 10.859c-.187-.203-.391-.469-.391-.75 0-.469.484-.656.875-.719l7.844-1.141 3.516-7.109c.141-.297.406-.641.766-.641s.625.344.766.641l3.516 7.109 7.844 1.141c.375.063.875.25.875.719z"/>
+                                                                                </symbol>
+                                                                            </svg>
+                                                                        </div>
+                                                                        <div class="form-group">
+
+                                                                            <textarea class="form-control" rows="8"
+                                                                                      th:id="${'review-text-'+ product.id}" name="reviewText" required="required"></textarea>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <p class="review-require" style="color: blue">Review must be more than 4 characters</p>
+                                                                    <div class="modal-footer">
+                                                                        <p class="file-name" th:id="${'filename-'+product.id}"></p>
+                                                                        <label th:for="${'addImage-'+ product.id}" class="btn btn-secondary">
+                                                                            <i class="fa fa-camera"></i>Add
+                                                                            Image</label>
+                                                                        <input class="addImage" th:id="${'addImage-'+ product.id}" th:pid ="${product.id}" type="file" name="addImage"
+                                                                               hidden="hidden" accept=".png,.jpg,.jpeg">
+                                                                        <button type="submit" class="btn btn-primary" th:pid ="${product.id}"  th:id="${'submit-'+ product.id}" th:ocd="${order.createDate}"
+                                                                                data-dismiss="modal" disabled>
+                                                                            Submit
+                                                                        </button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </td>
+                                        <td width="10%">
+                                            <p th:text="${quantity}">
+                                            </p>
+                                        </td>
+                                        <td width="15%">
+                                            <p class="price currency" th:text="${price}">
+                                            </p>
+                                        </td>
+
+                                        <td width="15">
+                                            <p class="price currency" th:text="${total}">
+                                            </p>
+
+                                        </td>
+
+                                    </tr>
+                                </th:block>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                    <!-- REVIEW RESULT BEGIN-->
+                    <div class="modal fade" th:id="${'review-result'}"
+                         tabindex="-1"
+                         role="dialog" aria-labelledby="exampleModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <p class="header-result">HEADER RESULT</p>
+                                    <button type="button" class="close"
+                                            data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <p class="body-result">BODY RESULT</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- REVIEW RESULT END-->
+
+                    <!-- ORDER TABLE ITEMS END -->
+                    <div class="container-fluid">
+                        <div class="row order-total">
+                            <div class="col-md-6">
+                                <p>TOTAL :</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="price currency" th:text="${total}"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>SHIPPING COST :</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="price currency" th:text="${order.shippingMethod.shippingCost}"></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p>GRAND TOTAL :</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="price currency" th:id="grand-total" th:text="${order.grandTotal}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- My Account End -->
+
+<footer th:include="@{/normal/footer.html}"></footer>
+<!-- Back to Top -->
+<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+<!-- JavaScript Libraries -->
+<script th:src="@{/js/main.js}"></script>
+<script th:src="@{/js/my_account.js}"></script>
+<!--<script th:src="@{/js/ajax_cart.js}"></script>-->
+</body>
+</html>

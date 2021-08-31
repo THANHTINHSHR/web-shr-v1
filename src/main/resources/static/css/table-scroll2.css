@@ -1,0 +1,22 @@
+/*********thanh tinh shr*************************/
+/************ table scroll CSS ************/
+/**********************************/
+.table-scroll {
+
+    table-layout: fixed;
+    overflow-x: hidden;
+    overflow-y: auto;
+    word-break: normal;
+    /*display: block;*/
+    /*display: inline-table;*/
+    display: table;
+    height: 500px;
+    border-collapse: separate;
+}
+
+.table-scroll .thead-dark {
+    position: sticky;
+    top: 0;
+    border: 5px solid;
+    background-color: #FF6F61;
+}

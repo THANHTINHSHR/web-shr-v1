@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Search for [[${searchText}]]</title>
+    <!-- Favicon -->
+    <link th:href="@{/img/favicon.ico}" rel="icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Source+Code+Pro:700,900&display=swap"
+          rel="stylesheet">
+
+    <!-- CSS Libraries -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link th:href="@{/lib/slick/slick.css}" rel="stylesheet">
+    <link th:href="@{/lib/slick/slick-theme.css}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link th:href="@{/css/product.css}" rel="stylesheet">
+    <link th:href="@{/css/root-style.css}" rel="stylesheet">
+
+
+</head>
+<body>
+<header th:include="/normal/header.html"></header>
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-wrap">
+    <div class="container-fluid">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/home">Home</a></li>
+        </ul>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+<!-- Product List Start -->
+<div class="product-view">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Side Bar Start -->
+            <div class="col-lg-3 sidebar">
+                <div class="sidebar-widget category">
+                    <h2 class="title">Category</h2>
+                    <nav class="navbar bg-light">
+                        <ul class="navbar-nav">
+                            <li class="nav-item"><a class="nav-link category" href="/"><i
+                                    class="fa fa-home"></i>Home</a></li>
+                            <th:block th:each="category : ${categories}">
+                                <li class="nav-item"><a class="nav-link category"
+                                                        th:href="@{'/product/category/'+${category.id}+'/a/1'}"><i
+                                        th:class="${category.classIcon}"></i>[[${category.name}]]</a></li>
+                            </th:block>
+                        </ul>
+                    </nav>
+                </div>
+
+
+                <div class="sidebar-widget brands">
+                    <h2 class="title">Our Brands</h2>
+                    <ul>
+                        <th:block th:each="brand : ${brands}">
+                            <li><a th:href="@{'/product/brand/'+${brand.id}+'/a/1'}"
+                                   th:text="${brand.name}"></a><span th:text="${brand.amount}"></span></li>
+                        </th:block>
+                    </ul>
+                </div>
+
+
+            </div>
+            <!-- Side Bar End -->
+            <div class="col-lg-9">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="product-search-result">Kết quả time kiếm cho  [[${searchText}]] : <span  th:text="${totalItems}"></span></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="product-view-top">
+<!--                                <nav>-->
+                                    <ul class="view-nav">
+                                        <div class="row">
+                                            <li th:class="${sortBy == 'a'} ? 'selected': ''">
+                                                <a class="view-item"
+                                                   th:href="${'/product/search/'+searchText+'/a/1'}">All products</a>
+                                            </li>
+                                            <li th:class="${sortBy == 'p'} ? 'selected': ''">
+                                                <a class="view-item"
+                                                   th:href="${'/product/search/'+searchText+'/p/1'}">Popular</a>
+                                            </li>
+                                            <li th:class="${sortBy == 'b'} ? 'selected': ''">
+                                                <a class="view-item"
+                                                   th:href="${'/product/search/'+searchText+'/b/1'}">Best seller</a>
+                                            </li>
+                                            <li th:class="${sortBy == 'n'} ? 'selected': ''">
+                                                <a class="view-item"
+                                                   th:href="${'/product/search/'+searchText+'/n/1'}">New</a>
+                                            </li>
+                                            <li th:class="${sortBy == 'e'} ? 'selected': ''">
+                                                <a class="view-item"
+                                                   th:href="${'/product/search/'+searchText+'/e/1'}">Expensive</a>
+                                            </li>
+                                            <li th:class="${sortBy == 'l'} ? 'selected': ''">
+                                                <a class="view-item"
+                                                   th:href="${'/product/search/'+searchText+'/l/1'}">Low price</a>
+                                            </li>
+                                            <li th:class="${sortBy == 'r'} ? 'selected': ''">
+                                                <a class="view-item"
+                                                   th:href="${'/product/search/'+searchText+'/r/1'}">Rating</a>
+                                            </li>
+                                        </div>
+                                    </ul>
+<!--                                </nav>-->
+                            </div>
+                        </div>
+                        <th:block th:each="product : ${products}">
+                            <div class="col-md-3">
+
+                                <div class="product-item">
+
+                                    <div class="product-image">
+                                        <a th:href="${'/product/'+product.id}">
+                                            <img th:src="@{${'/img/'+product.imagesPath+'/'+product.firstImage}}"
+                                                 alt=${'Image' + product.name}>
+                                        </a>
+                                    </div>
+                                    <div class="product-title">
+                                        <p class="product-name text-limit" th:text="${product.name}"></p>
+                                        <div class="ratting">
+                                            <i th:class="${(product.rating>= 1)? 'fa fa-star light':'fa fa-star'}"></i>
+                                            <i th:class="${(product.rating >= 2)? 'fa fa-star light':'fa fa-star'}"></i>
+                                            <i th:class="${(product.rating >= 3)? 'fa fa-star light':'fa fa-star'}"></i>
+                                            <i th:class="${(product.rating >= 4)? 'fa fa-star light':'fa fa-star'}"></i>
+                                            <i th:class="${(product.rating >= 5)? 'fa fa-star light':'fa fa-star'}"></i>
+                                        </div>
+                                        <p class="product-price currency" th:text="${product.price}"></p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </th:block>
+                    </div>
+
+                </div>
+                <!-- Pagination Start -->
+                <div class="col-md-12">
+                    <div th:if="${totalPages >1}">
+                        <div class="row">
+                            <div class="col-sm">
+                                <a th:if="${ currentPage>1 }"
+                                   th:href="${'/product/search/'+searchText+'/'+sortBy+'/' + (currentPage -1) }">
+                                    Previous</a>
+                                </span>
+                            </div>
+                            <div class="col-sm">
+      <span th:each="i : ${#numbers.sequence(1,totalPages)}">
+      <a th:if="${currentPage != i}"    th:href="${'/product/search/'+searchText+'/'+sortBy+'/' + i}"> [[${i}]]</a>
+      <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp &nbsp;
+      </span>
+                            </div>
+                            <div class="col-sm">
+                                <a th:if="${currentPage < totalPages}"
+                                   th:href="${'/product/search/'+searchText+'/'+sortBy+'/' + (currentPage +1) }">
+                                    Next</a>
+                                <span th:unless="${currentPage <totalPages}">Next</span> &nbsp &nbsp;
+                                </span>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- Pagination End -->
+
+        </div>
+    </div>
+</div>
+<!-- Product List End -->
+<!-- Brand Start -->
+<div class="brand">
+    <div class="container-fluid">
+        <div class="brand-slider">
+            <div class="brand-item"><img src="img/brand-1.png" alt=""></div>
+            <div class="brand-item"><img src="img/brand-2.png" alt=""></div>
+            <div class="brand-item"><img src="img/brand-3.png" alt=""></div>
+            <div class="brand-item"><img src="img/brand-4.png" alt=""></div>
+            <div class="brand-item"><img src="img/brand-5.png" alt=""></div>
+            <div class="brand-item"><img src="img/brand-6.png" alt=""></div>
+        </div>
+    </div>
+</div>
+<!-- Brand End -->
+
+<footer th:include="/normal/footer.html"></footer>
+<!-- Back to Top -->
+<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+<!-- JavaScript Libraries -->
+<!--<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>-->
+<!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>-->
+<script th:src="@{/lib/easing/easing.min.js}"></script>
+<script th:src="@{/lib/slick/slick.min.js}"></script>
+
+<!-- Template Javascript -->
+<script th:src="@{/js/main.js}"></script>
+<script th:src="@{/js/products.js}"></script>
+
+</body>
+</html>
