@@ -21,5 +21,13 @@ DECLARE NEW_pid INT DEFAULT NEW.PRODUCT_ID;
  END IF;
  
 end $$
-
-INSERT INTO web_shr_v1.order_items ( product_id, quantity, ORDER_id) VALUES (1, 2, 34);
+delimiter $$
+-- product trigger 
+CREATE TRIGGER TG_INSERT_PRODUCT AFTER INSERT ON web_shr_v1.PRODUCTS FOR EACH ROW
+BEGIN
+UPDATE web_shr_v1.PRODUCTS SET RATING = 0 WHERE ID = NEW.ID;
+END $$
+-- RESET AUTOINCREMENT
+-- ALTER TABLE order_items AUTO_INCREMENT = 63;
+-- ALTER TABLE sold_products AUTO_INCREMENT = 21;
+-- INSERT INTO web_shr_v1.order_items ( product_id, quantity, ORDER_id) VALUES (1, 2, 34);
