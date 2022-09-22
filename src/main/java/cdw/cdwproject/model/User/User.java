@@ -167,10 +167,19 @@ public class User {
     }
 
     public boolean isOTPExpired() {
-        System.out.println("current time " + System.currentTimeMillis());
-        System.out.println("otp expired time " + (OTP_VALID_DURATION + otpCreateTime.getTime()));
-        System.out.println("is expired " + (System.currentTimeMillis() > OTP_VALID_DURATION + otpCreateTime.getTime()));
-        return (System.currentTimeMillis() > OTP_VALID_DURATION + otpCreateTime.getTime());
+//        System.out.println("current time " + System.currentTimeMillis());
+//        System.out.println("otp expired time " + (OTP_VALID_DURATION + otpCreateTime.getTime()));
+//        System.out.println("is expired " + (System.currentTimeMillis() > (OTP_VALID_DURATION + otpCreateTime.getTime())));
+//        return (System.currentTimeMillis() > (OTP_VALID_DURATION + otpCreateTime.getTime()));
+
+        long currentTimeInMillis = System.currentTimeMillis();
+        long otpRequestedTimeInMillis = this.otpCreateTime.getTime();
+        if (otpRequestedTimeInMillis + OTP_VALID_DURATION < currentTimeInMillis) {
+            // OTP expires
+            return false;
+        }
+
+   return true;
     }
 
 

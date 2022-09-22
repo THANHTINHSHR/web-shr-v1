@@ -1,7 +1,10 @@
 package cdw.cdwproject.service;
 
+import cdw.cdwproject.model.User.User;
 import cdw.cdwproject.model.cart.CartItem;
 import cdw.cdwproject.model.order.OrderItem;
+import cdw.cdwproject.model.order.payment.PaymentMethod;
+import cdw.cdwproject.model.order.shipping.ShippingMethod;
 import cdw.cdwproject.repository.OrderItemRepository;
 import cdw.cdwproject.repository.OrderRepository;
 
@@ -15,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -28,6 +32,25 @@ public class OrderServiceImp implements OrderService {
 
     @Override
     public void saveOrder(Order order) {
+        System.out.println("ooooooooo");
+//        System.out.println(order.toString());
+//        Order o = new Order();
+//        User u = new User();
+//        u.setEmail("hsjc@gmail.com");
+//        o.setUser(u);
+//        o.setRecipient("recipient");
+//        o.setPhone("0652626");
+//        o.setEmail("ccccccc@gmailcom");
+//        o.setShippingAddress("Heaven");
+//        o.setNote("xsxs");
+//        o.setSuccessDeliveryTime(new Date());
+//        o.setUpdateTime(new Date());
+//        o.setEarlyDeliveryTime(new Date());
+//        o.setGrandTotal(9999999);
+//
+//
+//        o.setOrderId(965);
+
         orderRepository.save(order);
     }
 
@@ -52,6 +75,7 @@ public class OrderServiceImp implements OrderService {
         return orderRepository.getOrdersByUserId(userID, pageable);
     }
 
+
     @Override
     public Page<Order> getOrdersByUserSearch(int userID, String searchS, Pageable pageable) {
         return orderRepository.getOrdersByUserSearch(userID, searchS, pageable);
@@ -66,6 +90,10 @@ public class OrderServiceImp implements OrderService {
     @Override
     public List<Order> getAllOrder() {
         return orderRepository.findAll();
+    }
+    @Override
+    public List<Order> getAllOrderByUserId(int userId) {
+        return orderRepository.getAllByUserId( userId);
     }
 
     @Override

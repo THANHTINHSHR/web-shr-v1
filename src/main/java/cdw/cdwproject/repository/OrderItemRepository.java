@@ -14,4 +14,5 @@ public interface OrderItemRepository extends JpaRepository <OrderItem, Long> {
 //    List<OrderItem> getOrderItemsByOrderId(int orderId);
     @Query("SELECT o FROM OrderItem o WHERE o.order.orderId  = ?1")
     List<OrderItem> getOrderItemsByOrderId(int orderId);
+
 }

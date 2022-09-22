@@ -24,7 +24,9 @@ public class UserServiceImp implements UserService {
     @Autowired
     JavaMailSender mailSender;
     @Autowired
-    PasswordEncoder passwordEncoder;
+    SecuriryPasswordGenerator securiryPasswordGenerator;
+
+
     @Autowired
     private UserRespository userRespository;
     @Autowired
@@ -57,7 +59,7 @@ public class UserServiceImp implements UserService {
         //  create random password and send pass to user email
         // send email - do later
         String randomPassword = UUID.randomUUID().toString().substring(0, 8);
-        String encrytedPassword = SecuriryPasswordGenerator.encodePassword(randomPassword);
+        String encrytedPassword = securiryPasswordGenerator.encodePassword(randomPassword).toString();
 
         //set user properties- basic properties the rest will update in web page
         user = new User();
@@ -72,6 +74,9 @@ public class UserServiceImp implements UserService {
         // default create user with role = CUSTOMER.
 
         Role role = roleRepository.getRoleByRoleName((isAdmin) ? Role.ROLE_ADMIN : Role.ROLE_USER);
+//       String  role = Role.ROLE_USER;
+//                Role role = roleRepository.getRoleByRoleName(Role.ROLE_USER);
+
         UserRole userRole = new UserRole();
         userRole.setUser(user);
         userRole.setRole(role);
@@ -79,10 +84,12 @@ public class UserServiceImp implements UserService {
         // send email
         try {
             sendOAuth2PassEmail(user, randomPassword);
+
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (MessagingException e) {
             e.printStackTrace();
+            System.out.println("send otp fail" + "\n" + e.toString());
         }
 
 
@@ -92,8 +99,9 @@ public class UserServiceImp implements UserService {
     @Override
     public void saveRegister(User user) {
         String otp = RandomString.make(6);
-        String encodedOTP = passwordEncoder.encode(otp);
-
+//        String encodedOTP = passwordEncoder.encode(otp);
+        String encodedOTP = securiryPasswordGenerator.encodePassword(otp);
+        System.out.println("otp encode: " + securiryPasswordGenerator.encodePassword((otp)));
         user.setOtp(encodedOTP);
         // YYYY-MM-DD hh:mm:ss
         user.setOtpCreateTime(Calendar.getInstance().getTime());
@@ -102,23 +110,31 @@ public class UserServiceImp implements UserService {
 
         saveUser(user);
 
+
         try {
             sendOTPEmail(user, otp);
+
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (MessagingException e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
     public boolean checkOTPInvalid(String email, String otp) {
         System.out.println("Check otp valid");
+        System.out.println("email " +  email + "  otp " +  otp);
         User user = getUserByEmail(email);
-        boolean isMatch = passwordEncoder.matches(otp, user.getOtp());
+
+//        boolean isMatch = passwordEncoder.matches(otp, user.getOtp());
+        boolean isMatch = securiryPasswordGenerator.isPasswordMatches(otp, user.getOtp());
         System.out.println("2 cp : " + otp + "\t" + user.getOtp());
         System.out.println("is match " + isMatch);
-        return (isMatch && !user.isOTPExpired());
+        System.out.println("time valid? :" + user.isOTPExpired() );
+
+        return (isMatch && user.isOTPExpired());
     }
 
     @Override
@@ -156,7 +172,6 @@ public class UserServiceImp implements UserService {
     public void sendOTPEmail(User user, String otp)
             throws UnsupportedEncodingException, MessagingException {
 
-
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
@@ -164,7 +179,7 @@ public class UserServiceImp implements UserService {
         helper.setTo(user.getEmail());
 
         String subject = "Here's your One Time Password (OTP) - Expire in 5 minutes!";
-
+//
         String content = "<p>Hello " + user.getName() + "</p>"
                 + "<p>For security reason, you're required to use the following "
                 + "One Time Password to login:</p>"
@@ -176,7 +191,7 @@ public class UserServiceImp implements UserService {
 
         helper.setText(content, true);
         mailSender.send(message);
-
+        System.out.println("SEND MAIL SUCCESS");
     }
 
     @Override

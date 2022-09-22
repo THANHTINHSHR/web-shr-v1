@@ -83,72 +83,79 @@ private UserServiceImp userServiceImp;
         }
         // notification
         //order
-        Pageable requestedPage = PageRequest.of(0, 5, Sort.by("CREATE_AT"));
-        Page<Order> orders = orderServiceImp.getOrdersByUserID(user.getId(), requestedPage);
-//        Order order = new Order
-        // user Detail
-        model.addAttribute("orders", orders.getContent());
-        model.addAttribute("user", user);
-        model.addAttribute("totalPages", orders.getTotalPages());
+//        Pageable requestedPage = PageRequest.of(0, 5, Sort.by("CREATE_AT"));
+//        Page<Order> orders = orderServiceImp.getOrdersByUserID(user.getId(), requestedPage);
+//
+//        // -- user Detail
+//        model.addAttribute("orders", orders.getContent());
+//        model.addAttribute("user", user);
+//        model.addAttribute("totalPages", orders.getTotalPages());
+        List<Order> userOrders = orderServiceImp.getAllOrderByUserId(user.getId());
+        model.addAttribute("orders",userOrders);
 
-        return "user/account-orders";
+        return "user/account-orders2";
 
     }
 
-    @PostMapping("/my-account/orders")
-    @ResponseBody
-    public OrderResponse findUserOrdersPaginated( @AuthenticationPrincipal MyUserDetails userDetails, @Param(value = "currentPage") int currentPage, @Param(value = "sByCreateDate") String sByCreateDate, @Param(value = "sByGrandTotal") String sByGrandTotal, @Param(value = "isDESC") String isDESC, @Param(value = "pageSize") int pageSize, @Param("SearchText") String searchText,  @AuthenticationPrincipal CustomOAuth2User oAuth2User) {
-        User user;
-        try {
-            user = userServiceImp.getUserByEmail(oAuth2User.getEmail());
-        } catch (NullPointerException e) {
-
-
-            user = userDetails.getUser();
-        }
-
-        Page<Order> orders = null;
-        OrderResponse orderResponse;
-        Pageable requestedPage;
-
-        boolean sBGT = Boolean.parseBoolean(sByGrandTotal);
-        boolean sBCD = Boolean.parseBoolean(sByCreateDate);
-        boolean desc = Boolean.parseBoolean(isDESC);
-
-        // sort by grand total
-        if (sBGT) {
-//            short by total + desc
-            if (desc) {
-                requestedPage = PageRequest.of(currentPage, pageSize, Sort.by("GRAND_TOTAL").descending());
-            }
-//            short by total + asc
-            else {
-                requestedPage = PageRequest.of(currentPage, pageSize, Sort.by("GRAND_TOTAL").ascending());
-            }
-        }
-        // sort by creat date
-        // because button sortByGrandTotal and sortByCreate Date in same group radiobutton.
-        else {
-            // sort by create date + desc
-            if (desc) {
-                requestedPage = PageRequest.of(currentPage, pageSize, Sort.by("CREATE_AT").descending());
-            }
-            // sort by create date + asc
-            else {
-                requestedPage = PageRequest.of(currentPage, pageSize, Sort.by("CREATE_AT").ascending());
-            }
-        }
-//        if(searchText.equals(""){
-//            orders = orderServiceImp.getOrdersByUserID(user.getId(), requestedPage);
+//    @PostMapping("/my-account/orders")
+//    @ResponseBody
+//    public  @ResponseBody OrderResponse findUserOrdersPaginated( @AuthenticationPrincipal MyUserDetails userDetails, @Param(value = "currentPage") int currentPage, @Param(value = "sByCreateDate") String sByCreateDate, @Param(value = "sByGrandTotal") String sByGrandTotal, @Param(value = "isDESC") String isDESC, @Param(value = "pageSize") int pageSize, @Param("SearchText") String searchText,  @AuthenticationPrincipal CustomOAuth2User oAuth2User) {
+//        User user;
+//        try {
+//            user = userServiceImp.getUserByEmail(oAuth2User.getEmail());
+//        } catch (NullPointerException e) {
+//
+//
+//            user = userDetails.getUser();
 //        }
-
-        orders = (searchText.equals("") || searchText == null) ? orderServiceImp.getOrdersByUserID(user.getId(), requestedPage) : orderServiceImp.getOrdersByUserSearch(user.getId(), searchText, requestedPage);
-
-//        orders = orderServiceImp.getOrdersByUserSearch(user.getId(), searchText, requestedPage);
-        orderResponse = new OrderResponse(user, orders.getContent(), orders.getTotalPages(), currentPage, pageSize);
-        return orderResponse;
-
-    }
+//        System.out.println("sssccscscscs");
+//        Page<Order> orders = null;
+//        OrderResponse orderResponse;
+//        Pageable requestedPage;
+//
+//        boolean sBGT = Boolean.parseBoolean(sByGrandTotal);
+//        boolean sBCD = Boolean.parseBoolean(sByCreateDate);
+//        boolean desc = Boolean.parseBoolean(isDESC);
+//
+//        // sort by grand total
+//        if (sBGT) {
+////            short by total + desc
+//            if (desc) {
+//                requestedPage = PageRequest.of(currentPage, pageSize, Sort.by("GRAND_TOTAL").descending());
+//            }
+////            short by total + asc
+//            else {
+//                requestedPage = PageRequest.of(currentPage, pageSize, Sort.by("GRAND_TOTAL").ascending());
+//            }
+//        }
+//        // sort by creat date
+//        // because button sortByGrandTotal and sortByCreate Date in same group radiobutton.
+//        else {
+//            // sort by create date + desc
+//            if (desc) {
+//                requestedPage = PageRequest.of(currentPage, pageSize, Sort.by("CREATE_AT").descending());
+//            }
+//            // sort by create date + asc
+//            else {
+//                requestedPage = PageRequest.of(currentPage, pageSize, Sort.by("CREATE_AT").ascending());
+//            }
+//        }
+////        if(searchText.equals(""){
+////            orders = orderServiceImp.getOrdersByUserID(user.getId(), requestedPage);
+////        }
+//
+//        orders = (searchText.equals("") || searchText == null) ? orderServiceImp.getOrdersByUserID(user.getId(), requestedPage) : orderServiceImp.getOrdersByUserSearch(user.getId(), searchText, requestedPage);
+//
+////        orders = orderServiceImp.getOrdersByUserSearch(user.getId(), searchText, requestedPage);
+//        orderResponse = new OrderResponse(user, orders.getContent(), orders.getTotalPages(), currentPage, pageSize);
+//        System.out.println("oooooooooooooooooo");
+//        System.out.println(orderResponse.toString());
+//        System.out.println("oooooooooooooooooo");
+//
+//
+//        return orderResponse;
+//
+//    }
 
     @GetMapping("/my-account/orders/view/{orderId}")
     public String showUserOrder(Model model, @AuthenticationPrincipal MyUserDetails userDetails, @PathVariable("orderId") int orderId, @AuthenticationPrincipal CustomOAuth2User oAuth2User) {

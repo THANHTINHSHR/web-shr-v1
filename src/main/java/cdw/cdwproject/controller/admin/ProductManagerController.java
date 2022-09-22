@@ -222,7 +222,8 @@ public class ProductManagerController {
             MultipartFile firstImage = formDataCreateProduct.getFirstImage();
             MultipartFile[] images = formDataCreateProduct.getImages();
 
-            // saave raw product first
+            // save raw product first
+
             Product product = new Product();
             product.setName(name);
             product.setPrice(price);
@@ -230,6 +231,7 @@ public class ProductManagerController {
             product.setBrand(brand);
             product.setCategory(category);
             product.setDescription(description);
+            product.setRating(0);
 //            product.setImagesPath(imagesPath);
 //            product.setFirstImage(fileName);
             product.setCreateDate(new Date());

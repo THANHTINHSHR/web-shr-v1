@@ -37,25 +37,8 @@ public class AddCookieInterceptor implements HandlerInterceptor {
             response.addCookie(dfCookie);
         }
 
-//        response.sendRedirect("/body");
-//      request.getRequestDispatcher("/body").forward(request, response);
-//        return HandlerInterceptor.super.preHandle(request, response, handler);
         return true;
     }
 
 
-//    @Override
-//    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-////        HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
-//
-//        HttpSession session = request.getSession();
-//        try{
-//            if(session != null){                            //Infinite
-//                response.sendRedirect("/body");
-//                return;
-//            }
-//        }catch(Exception e){
-//            e.toString();
-//        }
-//    }
 }

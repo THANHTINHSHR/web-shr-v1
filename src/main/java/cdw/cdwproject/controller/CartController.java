@@ -30,6 +30,88 @@ import java.util.List;
 
 @Controller
 public class CartController {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Autowired
     private CartItemServiceImp cartItemServiceImp;
     @Autowired
@@ -76,8 +158,8 @@ public class CartController {
                 }
                 // ready have cart cookie  -> read cookie
                 else {
-                    System.out.println("read current cookie ");
-                    System.out.println("guest cart cookie" +guestCart);
+//                    System.out.println("read current cookie ");
+//                    System.out.println("guest cart cookie" +guestCart);
                     List<CartItem> carts = readCookieCartItems(guestCart);
                     float cartTotal = getSubTotalFromCookie(guestCart);
                     model.addAttribute("carts", carts);

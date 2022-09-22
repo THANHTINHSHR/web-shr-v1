@@ -12,6 +12,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
         // all request, add cookie to define cookie enable or not
         registry.addInterceptor(new AddCookieInterceptor()).excludePathPatterns("/cookie-require").order(1);
         //
-        registry.addInterceptor(new CookieRequireInterceptor()).excludePathPatterns("/cookie-require").order(2);
+//        registry.addInterceptor(new CookieRequireInterceptor()).excludePathPatterns("/cookie-require").order(2);
     }
 }

@@ -16,6 +16,8 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: "/my-account/orders",
+            // contentType: 'application/json',
+            // dataType: 'json',
             data: {
                 // like parameter
                 currentPage: pageNumber,
@@ -28,7 +30,7 @@ $(document).ready(function () {
             },
             success: function (response) {
                 if (response.isEmpty == "true") {
-                    // alert("empty order");
+                    alert("empty order");
                     $(".table-responsive").empty();
                     // $("ul.pagination").empty();
                     $("#orders-empty").text("No result found!");
@@ -57,7 +59,7 @@ $(document).ready(function () {
                 }
             },
             error: function (e) {
-                alert("ERROR: ", e);
+                alert("ERROR: " + e.text, e);
                 console.log("ERROR: ", e);
             }
 
@@ -97,8 +99,10 @@ $(document).ready(function () {
     }
 
 
+
 //
-    $(document).on("click", "ul.pagination li a", function () {
+    $("ul.pagination li a").click(function (){
+    // $(document).on("click", "ul.pagination li a", function () {
         let searchText = $("#order-search-input").attr("search-text");
         let activeValue = parseInt($("ul.pagination li.active").text()); // current page
         let val = $(this).text()
@@ -220,14 +224,19 @@ $(document).ready(function () {
     $("input[name$='re-new-pass']").keyup(function () {
         let rePass = $('input[name$="re-new-pass"]').val();
         let newPass = $('input[name$="new-pass"]').val();
+        $("#success").text("");
+        $("#fail").text("");
+
         if (rePass != newPass) {
-            $("#updatePassMess").text("INCORRECT RETYPE NEW PASSWORD").css("color", "blue");
+            $("#updatePassMess").text("INCORRECT RETYPE NEW PASSWORD").css("color", "red");
+            $("#passSM").prop('disabled', true);
         } else {
             $("#updatePassMess").empty();
+            $("#passSM").prop('disabled', false);
 
         }
     })
-
+ 
 });
 $(document).ready(function () {
     let currencyClass = $(".currency");

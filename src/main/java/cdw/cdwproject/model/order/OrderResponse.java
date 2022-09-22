@@ -73,4 +73,15 @@ public class OrderResponse {
     public void setIsEmpty(String isEmpty) {
         this.isEmpty = isEmpty;
     }
+
+    @Override
+    public String toString() {
+        return "OrderResponse{" +
+                "user=" + user.getId() +
+                ", totalPages=" + totalPages +
+                ", currentPage=" + currentPage +
+                ", pageSize=" + pageSize +
+                ", isEmpty='" + isEmpty + '\'' +
+                '}';
+    }
 }

@@ -17,9 +17,17 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<Order, Integer>, JpaSpecificationExecutor {
     @Query(value = "SELECT * FROM ORDERS WHERE USER_ID= ?1", nativeQuery = true)
     Page<Order> getOrdersByUserId(int userId, Pageable pageable);
+    List<Order> getAllByUserId(int userId);
 
 
-    @Query(value = "SELECT * FROM ORDERS WHERE USER_ID = ?1 AND( CAST(ORDER_ID AS NVARCHAR(100))  LIKE %?2% OR CAST(CREATE_AT AS NVARCHAR(100))  LIKE %?2% OR CAST(GRAND_TOTAL AS NVARCHAR(100))  LIKE %?2% OR CAST(STATUS AS NVARCHAR(100))  LIKE %?2%)", nativeQuery = true)
+//    @Query(value = "SELECT * FROM ORDERS WHERE USER_ID = ?1 AND( CAST(ORDER_ID AS NVARCHAR(100))  LIKE %?2% OR " +
+//            "CAST(CREATE_AT AS NVARCHAR(100))  LIKE %?2% OR " +
+//            "CAST(GRAND_TOTAL AS NVARCHAR(100))  LIKE %?2% OR " +
+//            "CAST(STATUS AS NVARCHAR(100))  LIKE %?2%)", nativeQuery = true)
+@Query(value = "SELECT * FROM ORDERS WHERE USER_ID = ?1 AND( ORDER_ID   LIKE %?2% OR " +
+        "CREATE_AT  LIKE %?2% OR " +
+        "GRAND_TOTAL   LIKE %?2% OR " +
+        "STATUS LIKE %?2%)", nativeQuery = true)
     Page<Order> getOrdersByUserSearch(int userID, String searchS, Pageable pageable);
 
     Order getOrderByUserIdAndOrderId(int userId, int orderID);

@@ -51,19 +51,19 @@
                             <div class="col-md-6">
                                 <label>Recipient(*)</label>
                                 <input class="form-control" type="text" th:value="${name}"
-                                       th:form="checkout-form" th:name="recipient" th:required="true"
+                                       th:form="checkout-form" th:name="recipient" th:required="true" th:min="1" th:max="20"
                                      >
                             </div>
 
                             <div class="col-md-6">
                                 <label>E-mail</label>
                                 <input class="form-control" type="text" th:value="${email}"
-                                       th:form="checkout-form" th:name="email">
+                                       th:form="checkout-form" th:name="email" th:type="email">
                             </div>
                             <div class="col-md-6">
                                 <label>Phone(*)</label>
                                 <input class="form-control" type="text" th:value="${phone}"
-                                       th:form="checkout-form" th:name="phone" th:required="true">
+                                       th:form="checkout-form" th:name="phone" th:required="true" th:type="number">
                             </div>
                             <div class="col-md-6">
                                 <label>Shipping Address(*)</label>

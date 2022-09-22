@@ -49,7 +49,7 @@ public class OrderRestController {
         List<CartItem> carts = cartItemServiceImp.findCartsByUser(user);
         if (carts.isEmpty()) return "errors/empty-step";
         //create Order parameter values
-
+System.out.println("11111111111111111111111111111");
         Order order = new Order();
         order.setUser(user);
         order.setRecipient(recipient);
@@ -88,9 +88,14 @@ public class OrderRestController {
         order.setCreateDate(new Date());
         order.setUpdateTime(new Date());
         // save to db
+        System.out.println("12222222222222222222222");
+        System.out.println(order.toString());
+//        order.setOrderId(39);
         orderServiceImp.saveOrder(order);
+        System.out.println("3333333333");
         orderServiceImp.saveOrderItems(order, carts);
-        // delete curent cart
+        System.out.println("4444444444");
+        // delete current cart
         cartItemServiceImp.deleteCartItemsByUserId(user.getId());
         // add attribute
         model.addAttribute("order", order);

@@ -3,38 +3,29 @@ package cdw.cdwproject.controller;
 import cdw.cdwproject.model.User.*;
 import cdw.cdwproject.model.category.Category;
 import cdw.cdwproject.model.product.Product;
-import cdw.cdwproject.oauth.*;
 import cdw.cdwproject.service.CategoryServiceImp;
 import cdw.cdwproject.service.ProductServiceImp;
 import cdw.cdwproject.service.UserRoleServiceImp;
 import cdw.cdwproject.service.UserServiceImp;
-import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.social.connect.Connection;
-import org.springframework.social.connect.ConnectionFactoryLocator;
-import org.springframework.social.connect.UsersConnectionRepository;
-import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.security.Principal;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,7 +55,7 @@ public class MainController {
         model.addAttribute("fProducts", featuredProducts);
         model.addAttribute("nProducts", newProducts);
         model.addAttribute("categories", categories);
-        return "normal/body";
+        return "normal/index";
     }
 //    @GetMapping("/")
 //    public String index(Model model){
@@ -96,12 +87,12 @@ public class MainController {
     }
 
     @PostMapping("/register")
-    public String doRegister(Model model, @Valid UserForm userForm, BindingResult bResult, final RedirectAttributes redirectAttributes) {
+    public String doRegister(Model model, @Valid UserForm userForm, BindingResult bResult, final RedirectAttributes redirectAttributes) throws MessagingException, UnsupportedEncodingException {
 
         // Validate result
         if (bResult.hasErrors()) {
 
-            System.out.println("error validate register");
+//            System.out.println("error validate register");
 //            System.out.println(bResult.get);
             model.addAttribute("UserForm", userForm);
             return "normal/register";
@@ -130,6 +121,7 @@ public class MainController {
 
 
         userServiceImp.saveRegister(user);
+
 
 
 //        userServiceImp.sentOTP(userServiceImp.getUserByEmail(user.getEmail()));
@@ -162,6 +154,7 @@ public class MainController {
             return "redirect:/login";
         } else {
             model.addAttribute("errorMess", "OTP incorrect or expired");
+            model.addAttribute("email",email);
             return "normal/otp-register";
         }
     }

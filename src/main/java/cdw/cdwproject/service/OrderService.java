@@ -20,6 +20,7 @@ public interface OrderService {
     List<OrderItem> getOrderItemsByOrderId(int orderId);
 
     List<Order> getAllOrder();
+    List<Order> getAllOrderByUserId(int userId);
 
     Order getOrderByOrderID(int oID);
 

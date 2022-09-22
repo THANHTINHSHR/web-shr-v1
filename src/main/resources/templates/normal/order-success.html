@@ -39,7 +39,7 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="order-success">
-                <h2> Order success, your order id is <a th:href="${'/my-account/orders/view/'+order.orderId}" th:text="${'#'+order.orderId}"></a></h2>
+                <h2> Order success, your order id is <a th:href="${'/my-account/orders/view/'+order.orderId}" th:text="${''+order.orderId}"></a></h2>
                 <div class="order-info">
                     <h2>Order info</h2>
                     <div class="row">

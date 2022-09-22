@@ -1,13 +1,17 @@
 package cdw.cdwproject.email;
 
+import org.jboss.jandex.Main;
+
 public class MyConstants {
 
     // Replace with your email here:
     public static final String MY_EMAIL = "tromail00@gmail.com";
 
     // Replace password!!
-    public static final String MY_PASSWORD = "tromail00cnmp";
+    public static final String MY_PASSWORD = "tkkqazsbttkhlegs";
 
-    // And receiver!
-//    public static final String FRIEND_EMAIL = "yourFriend@gmail.com";
+    public static void main(String[] args) {
+
+    }
+
 }

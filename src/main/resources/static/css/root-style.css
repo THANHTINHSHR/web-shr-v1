@@ -727,6 +727,7 @@ product-item {
     /*word-break: normal;*/
 
     /*https://stackoverflow.com/questions/3922739/limit-text-length-to-n-lines-using-css*/
+    /* Giới hạn độ dài tên sản phẩm trong bock */
     display: block; /* Fallback for non-webkit */
     display: -webkit-box;
     height: 2.6em; /* Fallback for non-webkit, line-height * 2 */

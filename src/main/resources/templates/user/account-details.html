@@ -115,9 +115,9 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="row">
-                                        <button class="btn">Save Changes</button>
-                                        <p th:text="${pSuccess}" style="color: green; text-align: right"></p>
-                                        <p th:text="${pFail}" style="color: red; text-align: right"></p>
+                                        <button class="btn" th:id="passSM">Save Changes</button>
+                                        <p th:id="success" th:text="${pSuccess}" style="color: green; text-align: right"></p>
+                                        <p th:id="fail" th:text="${pFail}" style="color: red; text-align: right"></p>
                                         <p id="updatePassMess"></p>
                                     </div>
                                 </div>

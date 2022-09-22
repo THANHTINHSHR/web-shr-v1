@@ -89,7 +89,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer>, JpaS
     @Query("SElECT p FROM Product p LEFT JOIN SoldProduct s ON p.id = s.product.id WHERE p.brand.id = ?1 OR p.category.id = ?2 ORDER BY s.saleNumber DESC")
     Page<Product> getRelatedProducts(int brandId, int categoryId, Pageable pageable);
 
-    @Query(value = "SELECT top 1 * FROM PRODUCTS ORDER BY ID DESC", nativeQuery = true)
+//    @Query(value = "SELECT top 1 * FROM PRODUCTS ORDER BY ID DESC", nativeQuery = true)
+    @Query(value = "SELECT  * FROM PRODUCTS ORDER BY ID DESC limit 1", nativeQuery = true)
+
     Product getLastProduct();
 }
 
