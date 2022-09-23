@@ -23,7 +23,7 @@
 
 </head>
 <body>
-<header th:include="/normal/header.html"></header>
+<header th:include="normal/header.html"></header>
 <div class="cart-content">
 <th:block   th:if="${carts.size() !=0}">
 <!-- Cart Start -->
@@ -141,7 +141,7 @@
 
 </th:block>
 </div>
-<footer th:include="/normal/footer.html"></footer>
+<footer th:include="normal/footer.html"></footer>
 <!-- Back to Top -->
 <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
 <!--<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>-->
